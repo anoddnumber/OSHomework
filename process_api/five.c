@@ -4,10 +4,6 @@
 #include <string.h>
 #include <sys/wait.h>
 
-/*
- * Useful explanation: https://stackoverflow.com/questions/5769734/what-are-the-different-versions-of-exec-used-for-in-c-and-c
- * Examples: http://www.yolinux.com/TUTORIALS/ForkExecProcesses.html
- */
 int
 main(int argc, char *argv[])
 {
