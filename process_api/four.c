@@ -5,6 +5,10 @@
 #include <sys/wait.h>
 void do_execl();
 void do_execle();
+void do_execlp();
+void do_execv();
+void do_execvp();
+void do_execvP();
 
 /*
  * Useful explanation: https://stackoverflow.com/questions/5769734/what-are-the-different-versions-of-exec-used-for-in-c-and-c
@@ -23,7 +27,7 @@ main(int argc, char *argv[])
     } else if (rc == 0) {
         // child (new process)
         printf("hello, I am child (pid:%d)\n", (int) getpid());
-        do_execle();
+        do_execvp();
         /*char *myargs[3];
         myargs[0] = strdup("wc");   // program: "wc" (word count)
         myargs[1] = strdup("four.c"); // argument: file to count
@@ -54,4 +58,29 @@ void do_execle()
     // execle lets you define an environment and pass it in.
     char *env[] = { "ABC=def", (char *) 0 };
     execle("/bin/bash", "bash", "-c", "echo $ABC", (char *) 0, env);
+}
+
+void do_execlp()
+{
+    // execlp uses the $PATH variable to find executables. Therefore "ls" does not need to be written as "/bin/ls" instead
+    execlp("ls", "/bin/ls", "-ltra", (char *) 0);
+}
+
+void do_execv()
+{
+    // execv passes in arguments using an array
+    char *args[] = {"/bin/ls", "-l", "-t", "-r", "-a", (char *) 0 };
+    execv("/bin/ls", args);
+}
+
+void do_execvp()
+{
+    //execvp passes in arguments using an array and uses the $PATH to find executables.
+    char *args[] = {"ls", "-l", "-t", "-r", "-a", (char *) 0 };
+    execv("/bin/ls", args);
+}
+
+void do_execvP()
+{
+    // Not sure why the homework asks for execvP since it doesn't seem to exist.
 }
